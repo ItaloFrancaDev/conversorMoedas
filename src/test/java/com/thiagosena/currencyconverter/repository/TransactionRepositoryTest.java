@@ -24,13 +24,13 @@ public class TransactionRepositoryTest {
 
 	@BeforeEach
 	@Transactional
-	void setUp() {
+	void setUpUser() {
 		User user = new User();
 		user.name = "Acheropita Nagazaki";
 		user.persistAndFlush();
 
 		originalTransaction = new Transaction();
-		originalTransaction.userId = 1L;
+		originalTransaction.userId = user.id;
 		originalTransaction.conversionRate = new BigDecimal("6.133848");
 		originalTransaction.sourceCurrency = "EUR";
 		originalTransaction.targetCurrency = "BRL";
