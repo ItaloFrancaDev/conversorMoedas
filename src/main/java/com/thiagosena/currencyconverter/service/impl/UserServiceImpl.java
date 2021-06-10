@@ -1,4 +1,6 @@
 package com.thiagosena.currencyconverter.service.impl;
 
-public class UserServiceImpl {
+import com.thiagosena.currencyconverter.service.UserService;
+
+public class UserServiceImpl implements UserService {
 }

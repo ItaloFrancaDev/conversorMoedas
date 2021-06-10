@@ -21,6 +21,12 @@
 		<sonar.projectKey>thiagosena_currency-converter</sonar.projectKey>
 		<sonar.organization>thiagosena</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
+
+		<!-- Exclude from code coverage -->
+		<sonarcube.coverage.exclusions>**/*DTO.java,**/*Exception.java, **/*Handler.java, **/*Service.java</sonarcube.coverage.exclusions>
+
+		<!-- Exclude from code duplication -->
+		<sonarcube.cpd.exclusions>**/*DTO.java</sonarcube.cpd.exclusions>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -54,6 +60,11 @@
 		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-junit5-mockito</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-jacoco</artifactId>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
