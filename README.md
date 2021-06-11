@@ -22,7 +22,7 @@ Em construção
 A API foi desenvolvida utilizando a linguagem [JAVA 11](https://docs.oracle.com/en/java/javase/11/) com o framework [Quarkus](https://quarkus.io)
 
 <p align="center">
-  <img width="800" src="docs/quarkusmemory.png" alt="Benchmark Quarkus"></img>
+  <img width="400" height="300" src="docs/developer_joy.png" alt="Developer Joy"></img>
 </p>
 
 ### Porque usar o Quarkus?
@@ -31,7 +31,7 @@ O Quarkus é um framework java open source desenvolvido pela Red Hat e lançado 
 footprint, sendo assim um framework ótimo para cloud (ex: k8s), microservices e também serverless.
 
 <p align="center">
-  <img width="400" height="300" src="docs/developer_joy.png" alt="Developer Joy"></img>
+  <img width="800" src="docs/quarkusmemory.png" alt="Benchmark Quarkus"></img>
 </p>
 
 Na imagem acima, extraída do site [https://www.openshift.com/blog/quarkus-is-here-for-your-java](https://www.openshift.com/blog/quarkus-is-here-for-your-java), é possível ver dados de tempo de inicialização e consumo de memória com um
