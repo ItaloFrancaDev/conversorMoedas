@@ -16,17 +16,10 @@
 		<quarkus.platform.artifact-id>quarkus-universe-bom</quarkus.platform.artifact-id>
 		<quarkus.platform.group-id>io.quarkus</quarkus.platform.group-id>
 		<quarkus.platform.version>1.13.6.Final</quarkus.platform.version>
-		<surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
-
-		<sonar.projectKey>thiagosena_currency-converter</sonar.projectKey>
-		<sonar.organization>thiagosena</sonar.organization>
 		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-
-		<!-- Exclude from code coverage -->
-		<sonarcube.coverage.exclusions>**/*DTO.java,**/*Exception.java, **/*Handler.java, **/*Service.java</sonarcube.coverage.exclusions>
-
-		<!-- Exclude from code duplication -->
-		<sonarcube.cpd.exclusions>**/*DTO.java</sonarcube.cpd.exclusions>
+		<sonar.organization>thiagosena</sonar.organization>
+		<sonar.projectKey>thiagosena_currency-converter</sonar.projectKey>
+		<surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -43,10 +36,6 @@
 		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-arc</artifactId>
-		</dependency>
-		<dependency>
-			<groupId>io.quarkus</groupId>
-			<artifactId>quarkus-resteasy</artifactId>
 		</dependency>
 		<dependency>
 			<groupId>io.quarkus</groupId>
@@ -91,6 +80,18 @@
 		<dependency>
 			<groupId>io.quarkus</groupId>
 			<artifactId>quarkus-undertow</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-smallrye-openapi</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-resteasy-jsonb</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.quarkus</groupId>
+			<artifactId>quarkus-resteasy-jackson</artifactId>
 		</dependency>
 	</dependencies>
 	<build>
