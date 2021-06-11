@@ -15,7 +15,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @QuarkusTest
-public class UserRepositoryTest {
+class UserRepositoryTest {
 
 	private User originalUser;
 
@@ -28,7 +28,7 @@ public class UserRepositoryTest {
 
 	@Test
 	@Transactional
-	public void whenFindUserById_ThenReturnOne() {
+	void whenFindUserById_ThenReturnOne() {
 		originalUser.persistAndFlush();
 
 		User persistedUser = User.findById(originalUser.id);
@@ -40,7 +40,7 @@ public class UserRepositoryTest {
 
 	@Test
 	@Transactional
-	public void whenUserPersistsNameFieldWithNull_ThenReturnFail() {
+	void whenUserPersistsNameFieldWithNull_ThenReturnFail() {
 		originalUser.name = null;
 		PersistenceException ex = Assertions.assertThrows(PersistenceException.class, () -> originalUser.persistAndFlush());
 		assertNotNull(ex);
@@ -49,7 +49,7 @@ public class UserRepositoryTest {
 
 	@Test
 	@Transactional
-	public void whenUserPersistsNameFieldWithBlank_ThenReturnFail() {
+	void whenUserPersistsNameFieldWithBlank_ThenReturnFail() {
 		originalUser.name = "";
 		PersistenceException ex = Assertions.assertThrows(PersistenceException.class, () -> originalUser.persistAndFlush());
 		assertNotNull(ex);

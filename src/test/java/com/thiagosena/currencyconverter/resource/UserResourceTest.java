@@ -15,11 +15,11 @@ import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.Matchers.containsInAnyOrder;
 
 @QuarkusTest
-public class UserResourceTest {
+class UserResourceTest {
 
 	@BeforeEach
 	@Transactional
-	public void setUp() {
+	void setUp() {
 		Transaction.deleteAll();
 		User.deleteAll();
 
@@ -30,7 +30,7 @@ public class UserResourceTest {
 	}
 
 	@Test
-	public void whenPersistUser_ThenReturnOne() {
+	void whenPersistUser_ThenReturnOne() {
 		given()
 				.header("Content-Type", MediaType.APPLICATION_JSON)
 				.body(new UserDTO("Test1"))
@@ -42,7 +42,7 @@ public class UserResourceTest {
 	}
 
 	@Test
-	public void whenListAllUsers_ThenReturnAll() {
+	void whenListAllUsers_ThenReturnAll() {
 		given()
 				.when().get("/api/v1/users")
 				.then()

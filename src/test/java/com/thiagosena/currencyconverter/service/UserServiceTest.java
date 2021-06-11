@@ -14,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @QuarkusTest
-public class UserServiceTest {
+class UserServiceTest {
 
 	@Inject
 	UserService userService;
@@ -22,13 +22,13 @@ public class UserServiceTest {
 	private UserDTO userDTO;
 
 	@BeforeEach
-	public void setUp() {
+	void setUp() {
 		userDTO = new UserDTO("Test1");
 	}
 
 	@Test
 	@Transactional
-	public void whenPersistUser_ThenReturnOne() {
+	void whenPersistUser_ThenReturnOne() {
 		User.deleteAll();
 		User user = userService.persist(userDTO);
 		assertNotNull(user.id);
@@ -37,7 +37,7 @@ public class UserServiceTest {
 
 	@Test
 	@Transactional
-	public void whenListAllUsers_ThenReturnAll() {
+	void whenListAllUsers_ThenReturnAll() {
 		User.deleteAll();
 		userService.persist(userDTO);
 		List<User> users = userService.listAll();

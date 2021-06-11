@@ -22,7 +22,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @QuarkusTest
-public class TransactionRepositoryTest {
+class TransactionRepositoryTest {
 
 	private Transaction originalTransaction;
 
@@ -44,7 +44,7 @@ public class TransactionRepositoryTest {
 
 	@Test
 	@Transactional
-	public void whenNotExistTransaction_ThenReturnEmpty() {
+	void whenNotExistTransaction_ThenReturnEmpty() {
 		Transaction.deleteAll();
 		PanacheQuery<Transaction> allTransactions = Transaction.findAll();
 
@@ -55,7 +55,7 @@ public class TransactionRepositoryTest {
 
 	@Test
 	@Transactional
-	public void whenTransactionCreatedAndFindAll_ThenReturnOne() {
+	void whenTransactionCreatedAndFindAll_ThenReturnOne() {
 		Transaction.deleteAll();
 		originalTransaction.persistAndFlush();
 
@@ -67,7 +67,7 @@ public class TransactionRepositoryTest {
 
 	@Test
 	@Transactional
-	public void whenTransactionCreatedAndFindAllByUserId_ThenReturnOne() {
+	void whenTransactionCreatedAndFindAllByUserId_ThenReturnOne() {
 		Transaction.deleteAll();
 		originalTransaction.persistAndFlush();
 
@@ -85,7 +85,7 @@ public class TransactionRepositoryTest {
 
 	@Test
 	@Transactional
-	public void whenTransactionPersistsUserIdFieldWithNull_ThenReturnFail() {
+	void whenTransactionPersistsUserIdFieldWithNull_ThenReturnFail() {
 		originalTransaction.userId = null;
 		PersistenceException ex = assertThrows(PersistenceException.class, () -> originalTransaction.persistAndFlush());
 		assertNotNull(ex);
@@ -94,7 +94,7 @@ public class TransactionRepositoryTest {
 
 	@Test
 	@Transactional
-	public void whenTransactionPersistsConversionRateFieldWithNull_ThenReturnFail() {
+	void whenTransactionPersistsConversionRateFieldWithNull_ThenReturnFail() {
 		originalTransaction.conversionRate = null;
 		PersistenceException ex = assertThrows(PersistenceException.class, () -> originalTransaction.persistAndFlush());
 		assertNotNull(ex);
@@ -103,7 +103,7 @@ public class TransactionRepositoryTest {
 
 	@Test
 	@Transactional
-	public void whenTransactionPersistsSourceCurrencyFieldWithNull_ThenReturnFail() {
+	void whenTransactionPersistsSourceCurrencyFieldWithNull_ThenReturnFail() {
 		originalTransaction.sourceCurrency = null;
 		PersistenceException ex = assertThrows(PersistenceException.class, () -> originalTransaction.persistAndFlush());
 		assertNotNull(ex);
@@ -112,7 +112,7 @@ public class TransactionRepositoryTest {
 
 	@Test
 	@Transactional
-	public void whenTransactionPersistsSourceCurrencyFieldWithWrongLenght_ThenReturnFail() {
+	void whenTransactionPersistsSourceCurrencyFieldWithWrongLenght_ThenReturnFail() {
 		originalTransaction.sourceCurrency = "XPTO";
 		PersistenceException ex = assertThrows(PersistenceException.class, () -> originalTransaction.persistAndFlush());
 		assertNotNull(ex);
@@ -121,7 +121,7 @@ public class TransactionRepositoryTest {
 
 	@Test
 	@Transactional
-	public void whenTransactionPersistsTargetCurrencyFieldWithNull_ThenReturnFail() {
+	void whenTransactionPersistsTargetCurrencyFieldWithNull_ThenReturnFail() {
 		originalTransaction.targetCurrency = null;
 		PersistenceException ex = assertThrows(PersistenceException.class, () -> originalTransaction.persistAndFlush());
 		assertNotNull(ex);
@@ -130,7 +130,7 @@ public class TransactionRepositoryTest {
 
 	@Test
 	@Transactional
-	public void whenTransactionPersistsTargetCurrencyFieldWithWrongLenght_ThenReturnFail() {
+	void whenTransactionPersistsTargetCurrencyFieldWithWrongLenght_ThenReturnFail() {
 		originalTransaction.targetCurrency = "XPTO";
 		PersistenceException ex = assertThrows(PersistenceException.class, () -> originalTransaction.persistAndFlush());
 		assertNotNull(ex);
@@ -139,7 +139,7 @@ public class TransactionRepositoryTest {
 
 	@Test
 	@Transactional
-	public void whenTransactionPersistsSourceValueFieldWithNull_ThenReturnFail() {
+	void whenTransactionPersistsSourceValueFieldWithNull_ThenReturnFail() {
 		originalTransaction.sourceValue = null;
 		PersistenceException ex = assertThrows(PersistenceException.class, () -> originalTransaction.persistAndFlush());
 		assertNotNull(ex);
@@ -148,7 +148,7 @@ public class TransactionRepositoryTest {
 
 	@Test
 	@Transactional
-	public void whenTransactionPersistsDateTimeFieldWithNull_ThenReturnFail() {
+	void whenTransactionPersistsDateTimeFieldWithNull_ThenReturnFail() {
 		originalTransaction.dateTime = null;
 		PersistenceException ex = assertThrows(PersistenceException.class, () -> originalTransaction.persistAndFlush());
 		assertNotNull(ex);

@@ -14,7 +14,7 @@ public class UserServiceImpl implements UserService {
 	@Override
 	@Transactional
 	public User persist(UserDTO userDTO) {
-		User user = new User(userDTO.name);
+		var user = new User(userDTO.name);
 		user.persistAndFlush();
 		return user;
 	}

@@ -30,7 +30,7 @@ public class ConversionResource {
 			@QueryParam("target") @Size(min = 3, max = 3) String target,
 			@QueryParam("value") @DecimalMin("0.01") BigDecimal value
 	) {
-		TransactionDTO transactionDTO = new TransactionDTO(userId, source, value, target);
+		var transactionDTO = new TransactionDTO(userId, source, value, target);
 		return convertService.convert(transactionDTO);
 	}
 }
