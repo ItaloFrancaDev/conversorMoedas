@@ -1,87 +1,47 @@
 package com.thiagosena.currencyconverter.dto;
 
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 public class TransactionDTO {
 
-	private Long transactionId;
+	public Long transactionId;
 
-	private Long userId;
+	@NotNull
+	public Long userId;
 
-	private String sourceCurrency;
+	@NotNull
+	@Size(min = 3, max = 3)
+	public String sourceCurrency;
 
-	private BigDecimal sourceValue;
+	@NotNull
+	@DecimalMin("0.00")
+	public BigDecimal sourceValue;
 
-	private String targetCurrency;
+	@NotNull
+	@Size(min = 3, max = 3)
+	public String targetCurrency;
 
-	private BigDecimal targeValue;
+	@NotNull
+	@DecimalMin("0.00")
+	public BigDecimal targetValue;
 
-	private BigDecimal convertionRate;
+	@NotNull
+	public BigDecimal convertionRate;
 
-	private LocalDateTime dateTime;
+	@NotNull
+	public LocalDateTime dateTime;
 
-	public Long getTransactionId() {
-		return transactionId;
+	public TransactionDTO() {
 	}
 
-	public void setTransactionId(Long transactionId) {
-		this.transactionId = transactionId;
-	}
-
-	public Long getUserId() {
-		return userId;
-	}
-
-	public void setUserId(Long userId) {
+	public TransactionDTO(Long userId, String sourceCurrency, BigDecimal sourceValue, String targetCurrency) {
 		this.userId = userId;
-	}
-
-	public String getSourceCurrency() {
-		return sourceCurrency;
-	}
-
-	public void setSourceCurrency(String sourceCurrency) {
 		this.sourceCurrency = sourceCurrency;
-	}
-
-	public BigDecimal getSourceValue() {
-		return sourceValue;
-	}
-
-	public void setSourceValue(BigDecimal sourceValue) {
 		this.sourceValue = sourceValue;
-	}
-
-	public String getTargetCurrency() {
-		return targetCurrency;
-	}
-
-	public void setTargetCurrency(String targetCurrency) {
 		this.targetCurrency = targetCurrency;
-	}
-
-	public BigDecimal getTargeValue() {
-		return targeValue;
-	}
-
-	public void setTargeValue(BigDecimal targeValue) {
-		this.targeValue = targeValue;
-	}
-
-	public BigDecimal getConvertionRate() {
-		return convertionRate;
-	}
-
-	public void setConvertionRate(BigDecimal convertionRate) {
-		this.convertionRate = convertionRate;
-	}
-
-	public LocalDateTime getDateTime() {
-		return dateTime;
-	}
-
-	public void setDateTime(LocalDateTime dateTime) {
-		this.dateTime = dateTime;
 	}
 }

@@ -1,23 +1,20 @@
 package com.thiagosena.currencyconverter.dto;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 public class UserDTO {
-	private Long id;
 
-	private String name;
+	@NotNull
+	@NotBlank
+	@Size(min = 3, max = 256, message = "The name parameter cannot exceed 256 characters and must be at least 3 characters")
+	public String name;
 
-	public Long getId() {
-		return id;
+	public UserDTO() {
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public void setName(String name) {
+	public UserDTO(String name) {
 		this.name = name;
 	}
 }

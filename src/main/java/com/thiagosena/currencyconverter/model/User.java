@@ -21,7 +21,13 @@ public class User extends PanacheEntityBase {
 
 	@NotNull
 	@NotBlank
-	@Size(min = 3, max = 256, message = "The name parameter cannot exceed 256 characters and must be at least 3 characters")
+	@Size(min = 3, max = 256)
 	public String name;
 
+	public User() {
+	}
+
+	public User(String name) {
+		this.name = name;
+	}
 }

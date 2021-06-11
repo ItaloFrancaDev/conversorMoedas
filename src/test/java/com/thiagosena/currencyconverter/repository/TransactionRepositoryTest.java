@@ -6,7 +6,6 @@ import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.test.junit.QuarkusTest;
 import org.hibernate.exception.ConstraintViolationException;
 import org.hibernate.exception.DataException;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -16,6 +15,11 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
 import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @QuarkusTest
 public class TransactionRepositoryTest {
@@ -44,9 +48,9 @@ public class TransactionRepositoryTest {
 		Transaction.deleteAll();
 		PanacheQuery<Transaction> allTransactions = Transaction.findAll();
 
-		Assertions.assertNotNull(allTransactions.list());
-		Assertions.assertTrue(allTransactions.list().isEmpty());
-		Assertions.assertEquals(0, allTransactions.stream().count());
+		assertNotNull(allTransactions.list());
+		assertTrue(allTransactions.list().isEmpty());
+		assertEquals(0, allTransactions.stream().count());
 	}
 
 	@Test
@@ -57,8 +61,8 @@ public class TransactionRepositoryTest {
 
 		PanacheQuery<Transaction> allTransactions = Transaction.findAll();
 
-		Assertions.assertNotNull(allTransactions.list());
-		Assertions.assertEquals(1, allTransactions.stream().count());
+		assertNotNull(allTransactions.list());
+		assertEquals(1, allTransactions.stream().count());
 	}
 
 	@Test
@@ -69,86 +73,86 @@ public class TransactionRepositoryTest {
 
 		List<Transaction> allTransactions = Transaction.findAllByUserId(originalTransaction.userId);
 
-		Assertions.assertNotNull(allTransactions);
-		Assertions.assertEquals(1, allTransactions.size());
-		Assertions.assertEquals(originalTransaction.id, allTransactions.get(0).id);
-		Assertions.assertEquals(originalTransaction.userId, allTransactions.get(0).userId);
-		Assertions.assertEquals(originalTransaction.conversionRate, allTransactions.get(0).conversionRate);
-		Assertions.assertEquals(originalTransaction.sourceCurrency, allTransactions.get(0).sourceCurrency);
-		Assertions.assertEquals(originalTransaction.sourceValue, allTransactions.get(0).sourceValue);
-		Assertions.assertEquals(originalTransaction.dateTime, allTransactions.get(0).dateTime);
+		assertNotNull(allTransactions);
+		assertEquals(1, allTransactions.size());
+		assertEquals(originalTransaction.id, allTransactions.get(0).id);
+		assertEquals(originalTransaction.userId, allTransactions.get(0).userId);
+		assertEquals(originalTransaction.conversionRate, allTransactions.get(0).conversionRate);
+		assertEquals(originalTransaction.sourceCurrency, allTransactions.get(0).sourceCurrency);
+		assertEquals(originalTransaction.sourceValue, allTransactions.get(0).sourceValue);
+		assertEquals(originalTransaction.dateTime, allTransactions.get(0).dateTime);
 	}
 
 	@Test
 	@Transactional
 	public void whenTransactionPersistsUserIdFieldWithNull_ThenReturnFail() {
 		originalTransaction.userId = null;
-		PersistenceException ex = Assertions.assertThrows(PersistenceException.class, () -> originalTransaction.persistAndFlush());
-		Assertions.assertNotNull(ex);
-		Assertions.assertTrue(ex.getCause() instanceof ConstraintViolationException);
+		PersistenceException ex = assertThrows(PersistenceException.class, () -> originalTransaction.persistAndFlush());
+		assertNotNull(ex);
+		assertTrue(ex.getCause() instanceof ConstraintViolationException);
 	}
 
 	@Test
 	@Transactional
 	public void whenTransactionPersistsConversionRateFieldWithNull_ThenReturnFail() {
 		originalTransaction.conversionRate = null;
-		PersistenceException ex = Assertions.assertThrows(PersistenceException.class, () -> originalTransaction.persistAndFlush());
-		Assertions.assertNotNull(ex);
-		Assertions.assertTrue(ex.getCause() instanceof ConstraintViolationException);
+		PersistenceException ex = assertThrows(PersistenceException.class, () -> originalTransaction.persistAndFlush());
+		assertNotNull(ex);
+		assertTrue(ex.getCause() instanceof ConstraintViolationException);
 	}
 
 	@Test
 	@Transactional
 	public void whenTransactionPersistsSourceCurrencyFieldWithNull_ThenReturnFail() {
 		originalTransaction.sourceCurrency = null;
-		PersistenceException ex = Assertions.assertThrows(PersistenceException.class, () -> originalTransaction.persistAndFlush());
-		Assertions.assertNotNull(ex);
-		Assertions.assertTrue(ex.getCause() instanceof ConstraintViolationException);
+		PersistenceException ex = assertThrows(PersistenceException.class, () -> originalTransaction.persistAndFlush());
+		assertNotNull(ex);
+		assertTrue(ex.getCause() instanceof ConstraintViolationException);
 	}
 
 	@Test
 	@Transactional
 	public void whenTransactionPersistsSourceCurrencyFieldWithWrongLenght_ThenReturnFail() {
 		originalTransaction.sourceCurrency = "XPTO";
-		PersistenceException ex = Assertions.assertThrows(PersistenceException.class, () -> originalTransaction.persistAndFlush());
-		Assertions.assertNotNull(ex);
-		Assertions.assertTrue(ex.getCause() instanceof DataException);
+		PersistenceException ex = assertThrows(PersistenceException.class, () -> originalTransaction.persistAndFlush());
+		assertNotNull(ex);
+		assertTrue(ex.getCause() instanceof DataException);
 	}
 
 	@Test
 	@Transactional
 	public void whenTransactionPersistsTargetCurrencyFieldWithNull_ThenReturnFail() {
 		originalTransaction.targetCurrency = null;
-		PersistenceException ex = Assertions.assertThrows(PersistenceException.class, () -> originalTransaction.persistAndFlush());
-		Assertions.assertNotNull(ex);
-		Assertions.assertTrue(ex.getCause() instanceof ConstraintViolationException);
+		PersistenceException ex = assertThrows(PersistenceException.class, () -> originalTransaction.persistAndFlush());
+		assertNotNull(ex);
+		assertTrue(ex.getCause() instanceof ConstraintViolationException);
 	}
 
 	@Test
 	@Transactional
 	public void whenTransactionPersistsTargetCurrencyFieldWithWrongLenght_ThenReturnFail() {
 		originalTransaction.targetCurrency = "XPTO";
-		PersistenceException ex = Assertions.assertThrows(PersistenceException.class, () -> originalTransaction.persistAndFlush());
-		Assertions.assertNotNull(ex);
-		Assertions.assertTrue(ex.getCause() instanceof DataException);
+		PersistenceException ex = assertThrows(PersistenceException.class, () -> originalTransaction.persistAndFlush());
+		assertNotNull(ex);
+		assertTrue(ex.getCause() instanceof DataException);
 	}
 
 	@Test
 	@Transactional
 	public void whenTransactionPersistsSourceValueFieldWithNull_ThenReturnFail() {
 		originalTransaction.sourceValue = null;
-		PersistenceException ex = Assertions.assertThrows(PersistenceException.class, () -> originalTransaction.persistAndFlush());
-		Assertions.assertNotNull(ex);
-		Assertions.assertTrue(ex.getCause() instanceof ConstraintViolationException);
+		PersistenceException ex = assertThrows(PersistenceException.class, () -> originalTransaction.persistAndFlush());
+		assertNotNull(ex);
+		assertTrue(ex.getCause() instanceof ConstraintViolationException);
 	}
 
 	@Test
 	@Transactional
 	public void whenTransactionPersistsDateTimeFieldWithNull_ThenReturnFail() {
 		originalTransaction.dateTime = null;
-		PersistenceException ex = Assertions.assertThrows(PersistenceException.class, () -> originalTransaction.persistAndFlush());
-		Assertions.assertNotNull(ex);
-		Assertions.assertTrue(ex.getCause() instanceof ConstraintViolationException);
+		PersistenceException ex = assertThrows(PersistenceException.class, () -> originalTransaction.persistAndFlush());
+		assertNotNull(ex);
+		assertTrue(ex.getCause() instanceof ConstraintViolationException);
 	}
 
 }

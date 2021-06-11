@@ -10,6 +10,10 @@ import org.junit.jupiter.api.Test;
 import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+
 @QuarkusTest
 public class UserRepositoryTest {
 
@@ -29,9 +33,9 @@ public class UserRepositoryTest {
 
 		User persistedUser = User.findById(originalUser.id);
 
-		Assertions.assertNotNull(persistedUser);
-		Assertions.assertEquals(originalUser.id, persistedUser.id);
-		Assertions.assertEquals(originalUser.name, persistedUser.name);
+		assertNotNull(persistedUser);
+		assertEquals(originalUser.id, persistedUser.id);
+		assertEquals(originalUser.name, persistedUser.name);
 	}
 
 	@Test
@@ -39,16 +43,16 @@ public class UserRepositoryTest {
 	public void whenUserPersistsNameFieldWithNull_ThenReturnFail() {
 		originalUser.name = null;
 		PersistenceException ex = Assertions.assertThrows(PersistenceException.class, () -> originalUser.persistAndFlush());
-		Assertions.assertNotNull(ex);
-		Assertions.assertTrue(ex.getCause() instanceof ConstraintViolationException);
+		assertNotNull(ex);
+		assertTrue(ex.getCause() instanceof ConstraintViolationException);
 	}
 
 	@Test
 	@Transactional
-	public void whenUserPersistsNameFildWithBlank_ThenReturnFail() {
+	public void whenUserPersistsNameFieldWithBlank_ThenReturnFail() {
 		originalUser.name = "";
 		PersistenceException ex = Assertions.assertThrows(PersistenceException.class, () -> originalUser.persistAndFlush());
-		Assertions.assertNotNull(ex);
-		Assertions.assertTrue(ex.getCause() instanceof ConstraintViolationException);
+		assertNotNull(ex);
+		assertTrue(ex.getCause() instanceof ConstraintViolationException);
 	}
 }
