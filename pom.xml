@@ -20,6 +20,10 @@
 		<sonar.organization>thiagosena</sonar.organization>
 		<sonar.projectKey>thiagosena_currency-converter</sonar.projectKey>
 		<surefire-plugin.version>3.0.0-M5</surefire-plugin.version>
+
+		<sonar.coverage.jacoco.xmlReportPaths>
+			${project.basedir}/target/jacoco-report/jacoco.xml
+		</sonar.coverage.jacoco.xmlReportPaths>
 	</properties>
 	<dependencyManagement>
 		<dependencies>
@@ -122,10 +126,9 @@
 				<artifactId>maven-surefire-plugin</artifactId>
 				<version>${surefire-plugin.version}</version>
 				<configuration>
-					<systemPropertyVariables>
-						<java.util.logging.manager>org.jboss.logmanager.LogManager</java.util.logging.manager>
-						<maven.home>${maven.home}</maven.home>
-					</systemPropertyVariables>
+					<includes>
+						<include>**/*Test.java</include>
+					</includes>
 				</configuration>
 			</plugin>
 		</plugins>
