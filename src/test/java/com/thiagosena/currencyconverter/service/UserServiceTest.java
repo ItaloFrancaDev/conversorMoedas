@@ -8,7 +8,6 @@ import org.junit.jupiter.api.Test;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
@@ -33,14 +32,5 @@ class UserServiceTest {
 		User user = userService.persist(userDTO);
 		assertNotNull(user.id);
 		assertEquals("Test1", user.name);
-	}
-
-	@Test
-	@Transactional
-	void whenListAllUsers_ThenReturnAll() {
-		User.deleteAll();
-		userService.persist(userDTO);
-		List<User> users = userService.listAll();
-		assertEquals(1, users.size());
 	}
 }

@@ -6,7 +6,6 @@ import com.thiagosena.currencyconverter.service.UserService;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.transaction.Transactional;
-import java.util.List;
 
 @ApplicationScoped
 public class UserServiceImpl implements UserService {
@@ -17,10 +16,5 @@ public class UserServiceImpl implements UserService {
 		var user = new User(userDTO.name);
 		user.persistAndFlush();
 		return user;
-	}
-
-	@Override
-	public List<User> listAll() {
-		return User.listAll();
 	}
 }

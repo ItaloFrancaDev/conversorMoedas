@@ -8,32 +8,32 @@ import java.time.LocalDateTime;
 
 public class TransactionDTO {
 
-	public Long transactionId;
+	private Long id;
 
 	@NotNull
-	public Long userId;
-
-	@NotNull
-	@Size(min = 3, max = 3)
-	public String sourceCurrency;
-
-	@NotNull
-	@DecimalMin("0.00")
-	public BigDecimal sourceValue;
+	private Long userId;
 
 	@NotNull
 	@Size(min = 3, max = 3)
-	public String targetCurrency;
+	private String sourceCurrency;
 
 	@NotNull
 	@DecimalMin("0.00")
-	public BigDecimal targetValue;
+	private BigDecimal sourceValue;
 
 	@NotNull
-	public BigDecimal convertionRate;
+	@Size(min = 3, max = 3)
+	private String targetCurrency;
 
 	@NotNull
-	public LocalDateTime dateTime;
+	@DecimalMin("0.00")
+	private BigDecimal targetValue;
+
+	@NotNull
+	private BigDecimal conversionRate;
+
+	@NotNull
+	private LocalDateTime dateTime;
 
 	public TransactionDTO() {
 	}
@@ -43,5 +43,53 @@ public class TransactionDTO {
 		this.sourceCurrency = sourceCurrency;
 		this.sourceValue = sourceValue;
 		this.targetCurrency = targetCurrency;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public Long getUserId() {
+		return userId;
+	}
+
+	public String getSourceCurrency() {
+		return sourceCurrency;
+	}
+
+	public BigDecimal getSourceValue() {
+		return sourceValue;
+	}
+
+	public String getTargetCurrency() {
+		return targetCurrency;
+	}
+
+	public BigDecimal getTargetValue() {
+		return targetValue;
+	}
+
+	public void setTargetValue(BigDecimal targetValue) {
+		this.targetValue = targetValue;
+	}
+
+	public BigDecimal getConversionRate() {
+		return conversionRate;
+	}
+
+	public void setConversionRate(BigDecimal conversionRate) {
+		this.conversionRate = conversionRate;
+	}
+
+	public LocalDateTime getDateTime() {
+		return dateTime;
+	}
+
+	public void setDateTime(LocalDateTime dateTime) {
+		this.dateTime = dateTime;
 	}
 }

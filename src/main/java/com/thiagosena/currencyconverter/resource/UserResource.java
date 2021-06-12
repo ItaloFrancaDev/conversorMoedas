@@ -31,6 +31,6 @@ public class UserResource {
 	@GET
 	@Path("/users")
 	public List<User> listAll() {
-		return userService.listAll();
+		return User.getAll();
 	}
 }
