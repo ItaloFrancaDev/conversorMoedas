@@ -37,7 +37,7 @@ class UserResourceTest {
 				.when()
 				.post("/api/v1/user")
 				.then()
-				.statusCode(200)
+				.statusCode(201)
 				.body("name", is("Test1"));
 	}
 

@@ -1,6 +1,8 @@
 package com.thiagosena.currencyconverter.resource;
 
 import com.thiagosena.currencyconverter.model.Transaction;
+import org.eclipse.microprofile.openapi.annotations.Operation;
+import org.eclipse.microprofile.openapi.annotations.responses.APIResponse;
 import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import javax.validation.constraints.NotNull;
@@ -20,6 +22,10 @@ public class TrasactionResource {
 
 	@GET
 	@Path("/transaction")
+	@Operation(summary = "Get all transaction by user")
+	@APIResponse(responseCode = "200", description = "Returned all transactions by user")
+	@APIResponse(responseCode = "400", description = "Bad Request - make sure the userId field is entered.")
+	@APIResponse(responseCode = "500", description = "Internal Server Error")
 	public List<Transaction> getAllTrasactionByUserId(@QueryParam("user_id") @NotNull Long userId) {
 		return Transaction.findAllByUserId(userId);
 	}

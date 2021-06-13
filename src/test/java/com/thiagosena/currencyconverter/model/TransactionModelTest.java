@@ -1,7 +1,5 @@
-package com.thiagosena.currencyconverter.repository;
+package com.thiagosena.currencyconverter.model;
 
-import com.thiagosena.currencyconverter.model.Transaction;
-import com.thiagosena.currencyconverter.model.User;
 import io.quarkus.hibernate.orm.panache.PanacheQuery;
 import io.quarkus.test.junit.QuarkusTest;
 import org.hibernate.exception.ConstraintViolationException;
@@ -23,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
 @QuarkusTest
-class TransactionRepositoryTest {
+class TransactionModelTest {
 
 	private Transaction originalTransaction;
 
