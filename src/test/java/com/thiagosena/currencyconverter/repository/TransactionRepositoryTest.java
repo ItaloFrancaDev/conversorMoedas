@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import javax.persistence.PersistenceException;
 import javax.transaction.Transactional;
+import javax.ws.rs.BadRequestException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
@@ -81,6 +82,13 @@ class TransactionRepositoryTest {
 		assertEquals(originalTransaction.sourceCurrency, allTransactions.get(0).sourceCurrency);
 		assertEquals(originalTransaction.sourceValue, allTransactions.get(0).sourceValue);
 		assertEquals(originalTransaction.dateTime, allTransactions.get(0).dateTime);
+	}
+
+	@Test
+	@Transactional
+	void whenFindAllByUserIdNull_ThenReturnException() {
+		BadRequestException ex = assertThrows(BadRequestException.class, () -> Transaction.findAllByUserId(null));
+		assertNotNull(ex);
 	}
 
 	@Test

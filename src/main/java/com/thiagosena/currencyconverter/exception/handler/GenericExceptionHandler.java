@@ -1,6 +1,7 @@
 package com.thiagosena.currencyconverter.exception.handler;
 
-import com.thiagosena.currencyconverter.dto.ApiErrorDTO;
+import com.thiagosena.currencyconverter.dto.ErrorDTO;
+import com.thiagosena.currencyconverter.dto.ExceptionDTO;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -16,8 +17,9 @@ public class GenericExceptionHandler implements ExceptionMapper<Exception> {
 
 	@Override
 	public Response toResponse(Exception ex) {
-		var apiError = new ApiErrorDTO(Status.INTERNAL_SERVER_ERROR, "Ops... We were not waiting for it.", ex.toString());
+		var apiError = new ExceptionDTO(Status.INTERNAL_SERVER_ERROR.getStatusCode(), Status.INTERNAL_SERVER_ERROR, "Ops... We were not waiting for it.", ex.toString());
+		var exception = new ErrorDTO(apiError);
 		LOG.error("Error: ", ex);
-		return Response.status(apiError.getStatus()).entity(apiError).build();
+		return Response.status(apiError.getStatus()).entity(exception).build();
 	}
 }

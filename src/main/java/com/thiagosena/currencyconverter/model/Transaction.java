@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.SequenceGenerator;
 import javax.validation.constraints.DecimalMin;
 import javax.validation.constraints.Size;
+import javax.ws.rs.BadRequestException;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -51,6 +52,9 @@ public class Transaction extends PanacheEntityBase {
 	public LocalDateTime dateTime;
 
 	public static List<Transaction> findAllByUserId(Long userId) {
+		if(userId == null) {
+			throw new BadRequestException("user_id is required");
+		}
 		return list("userId", userId);
 	}
 

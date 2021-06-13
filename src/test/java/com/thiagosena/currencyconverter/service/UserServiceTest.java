@@ -1,6 +1,7 @@
 package com.thiagosena.currencyconverter.service;
 
 import com.thiagosena.currencyconverter.dto.UserDTO;
+import com.thiagosena.currencyconverter.model.Transaction;
 import com.thiagosena.currencyconverter.model.User;
 import io.quarkus.test.junit.QuarkusTest;
 import org.junit.jupiter.api.BeforeEach;
@@ -28,6 +29,7 @@ class UserServiceTest {
 	@Test
 	@Transactional
 	void whenPersistUser_ThenReturnOne() {
+		Transaction.deleteAll();
 		User.deleteAll();
 		User user = userService.persist(userDTO);
 		assertNotNull(user.id);

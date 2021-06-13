@@ -1,6 +1,7 @@
 package com.thiagosena.currencyconverter.exception.handler;
 
-import com.thiagosena.currencyconverter.dto.ApiErrorDTO;
+import com.thiagosena.currencyconverter.dto.ErrorDTO;
+import com.thiagosena.currencyconverter.dto.ExceptionDTO;
 
 import javax.ws.rs.BadRequestException;
 import javax.ws.rs.core.Response;
@@ -13,7 +14,8 @@ public class BadRequestExceptionHandler implements ExceptionMapper<BadRequestExc
 
 	@Override
 	public Response toResponse(BadRequestException ex) {
-		var apiError = new ApiErrorDTO(Status.BAD_REQUEST, ex.getMessage(), null);
-		return Response.status(apiError.getStatus()).entity(apiError).build();
+		var apiErrorDTO = new ExceptionDTO(Status.BAD_REQUEST.getStatusCode(),Status.BAD_REQUEST, ex.getMessage(), null);
+		var exception = new ErrorDTO(apiErrorDTO);
+		return Response.status(apiErrorDTO.getStatus()).entity(exception).build();
 	}
 }

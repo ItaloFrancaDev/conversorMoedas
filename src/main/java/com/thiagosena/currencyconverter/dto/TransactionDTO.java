@@ -35,9 +35,6 @@ public class TransactionDTO {
 	@NotNull
 	private LocalDateTime dateTime;
 
-	public TransactionDTO() {
-	}
-
 	public TransactionDTO(Long userId, String sourceCurrency, BigDecimal sourceValue, String targetCurrency) {
 		this.userId = userId;
 		this.sourceCurrency = sourceCurrency;

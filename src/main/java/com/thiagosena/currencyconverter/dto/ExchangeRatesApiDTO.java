@@ -6,8 +6,12 @@ import java.util.Map;
 
 public class ExchangeRatesApiDTO {
 	private LocalDate date;
+
 	private String base;
+
 	private Map<String, BigDecimal> rates;
+
+	private ExceptionDTO error;
 
 	public ExchangeRatesApiDTO() {
 	}
@@ -40,5 +44,13 @@ public class ExchangeRatesApiDTO {
 
 	public void setRates(Map<String, BigDecimal> rates) {
 		this.rates = rates;
+	}
+
+	public ExceptionDTO getError() {
+		return error;
+	}
+
+	public void setError(ExceptionDTO error) {
+		this.error = error;
 	}
 }

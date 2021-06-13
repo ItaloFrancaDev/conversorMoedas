@@ -1,6 +1,7 @@
 package com.thiagosena.currencyconverter.exception.handler;
 
-import com.thiagosena.currencyconverter.dto.ApiErrorDTO;
+import com.thiagosena.currencyconverter.dto.ErrorDTO;
+import com.thiagosena.currencyconverter.dto.ExceptionDTO;
 
 import javax.ws.rs.NotFoundException;
 import javax.ws.rs.core.Response;
@@ -13,7 +14,8 @@ public class ResourceNotFoundExceptionHandler implements ExceptionMapper<NotFoun
 
 	@Override
 	public Response toResponse(NotFoundException ex) {
-		var apiError = new ApiErrorDTO(Status.NOT_FOUND, "Ops... Page not found.", ex.toString());
-		return Response.status(apiError.getStatus()).entity(apiError).build();
+		var apiError = new ExceptionDTO(Status.NOT_FOUND.getStatusCode(), Status.NOT_FOUND, "Ops... Page not found.", ex.toString());
+		var exception = new ErrorDTO(apiError);
+		return Response.status(apiError.getStatus()).entity(exception).build();
 	}
 }

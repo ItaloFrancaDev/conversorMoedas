@@ -3,6 +3,7 @@ package com.thiagosena.currencyconverter.resource;
 import com.thiagosena.currencyconverter.dto.UserDTO;
 import com.thiagosena.currencyconverter.model.User;
 import com.thiagosena.currencyconverter.service.UserService;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import javax.inject.Inject;
 import javax.validation.Valid;
@@ -15,6 +16,7 @@ import javax.ws.rs.core.MediaType;
 import java.util.List;
 
 @Path("/api/v1")
+@Tag(name = "Users")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
 public class UserResource {

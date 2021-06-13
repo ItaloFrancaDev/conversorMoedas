@@ -1,11 +1,14 @@
 package com.thiagosena.currencyconverter.resource;
 
+import com.thiagosena.currencyconverter.dto.ExceptionDTO;
 import com.thiagosena.currencyconverter.dto.ExchangeRatesApiDTO;
 import com.thiagosena.currencyconverter.model.Transaction;
 import com.thiagosena.currencyconverter.model.User;
 import com.thiagosena.currencyconverter.service.ExchangeRatesApiService;
+import io.quarkus.panache.mock.PanacheMock;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.mockito.InjectMock;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.eclipse.microprofile.rest.client.inject.RestClient;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -19,6 +22,7 @@ import java.time.LocalDate;
 import java.util.Map;
 
 import static io.restassured.RestAssured.given;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @QuarkusTest
 class ConverterResourceTest {
@@ -26,6 +30,9 @@ class ConverterResourceTest {
 	@InjectMock
 	@RestClient
 	ExchangeRatesApiService exchangeRatesAPIService;
+
+	@ConfigProperty(name = "app.exchangeratesapi.access_key")
+	String exchangeRatesApiKey;
 
 	private User user;
 
@@ -42,8 +49,7 @@ class ConverterResourceTest {
 	void whenNoParameterRequest_ThenReturnErrorStatus400() {
 		given()
 				.header("Content-Type", MediaType.APPLICATION_JSON)
-				.when()
-				.get("/api/v1/convert")
+				.when().get("/api/v1/convert")
 				.then()
 				.statusCode(Status.BAD_REQUEST.getStatusCode());
 	}
@@ -52,8 +58,7 @@ class ConverterResourceTest {
 	void whenSourceParameterIsNull_ThenReturnErrorStatus400() {
 		given()
 				.header("Content-Type", MediaType.APPLICATION_JSON)
-				.when()
-				.get("/api/v1/convert?user_id=1")
+				.when().get("/api/v1/convert?user_id=1&source=")
 				.then()
 				.statusCode(Status.BAD_REQUEST.getStatusCode());
 	}
@@ -62,8 +67,7 @@ class ConverterResourceTest {
 	void whenTargetParameterIsNull_ThenReturnErrorStatus400() {
 		given()
 				.header("Content-Type", MediaType.APPLICATION_JSON)
-				.when()
-				.get("/api/v1/convert?user_id=1&source=EUR")
+				.when().get("/api/v1/convert?user_id=1&source=EUR")
 				.then()
 				.statusCode(Status.BAD_REQUEST.getStatusCode());
 	}
@@ -72,25 +76,67 @@ class ConverterResourceTest {
 	void whenValueParameterIsNull_ThenReturnErrorStatus400() {
 		given()
 				.header("Content-Type", MediaType.APPLICATION_JSON)
-				.when()
-				.get("/api/v1/convert?user_id=1&source=EUR&target=BRL")
+				.when().get("/api/v1/convert?user_id=1&source=EUR&target=BRL")
 				.then()
 				.statusCode(Status.BAD_REQUEST.getStatusCode());
 	}
 
-
+	@Test
+	void whenValueParameterIsNegative_ThenReturnErrorStatus400() {
+		given()
+				.header("Content-Type", MediaType.APPLICATION_JSON)
+				.when().get("/api/v1/convert?user_id=1&source=EUR&target=BRL&value=-20")
+				.then()
+				.statusCode(Status.BAD_REQUEST.getStatusCode());
+	}
 
 	@Test
 	void whenAllParametersIsOk_ThenReturnSuccessStatus200() {
 		var exchangeRatesApiDTO = new ExchangeRatesApiDTO(LocalDate.now(), "EUR", Map.of("BRL", new BigDecimal("6.194345")));
-		Mockito.when(exchangeRatesAPIService.getExchangeRates("EUR", "BRL", "1")).thenReturn(exchangeRatesApiDTO);
+		Mockito.when(exchangeRatesAPIService.getExchangeRates("EUR", "BRL", exchangeRatesApiKey)).thenReturn(exchangeRatesApiDTO);
 
 		given()
 				.header("Content-Type", MediaType.APPLICATION_JSON)
-				.when()
-				.get("/api/v1/convert?user_id=" + user.id + "&source=EUR&target=BRL&value=5")
+				.when().get("/api/v1/convert?user_id=" + user.id + "&source=EUR&target=BRL&value=5")
 				.then()
 				.statusCode(Status.OK.getStatusCode());
+	}
+
+	@Test
+	void whenCurrencyNotFound_ThenReturnStatus400() {
+		LocalDate date = LocalDate.now();
+		var exchangeRatesApiDTO = new ExchangeRatesApiDTO();
+		exchangeRatesApiDTO.setDate(date);
+		exchangeRatesApiDTO.setBase("EUR");
+		exchangeRatesApiDTO.setRates(Map.of("ZZZ", new BigDecimal("5.3")));
+
+		ExceptionDTO exceptionDTO = new ExceptionDTO();
+		exceptionDTO.setMessage("You have provided one or more invalid Currency Codes Test");
+		exchangeRatesApiDTO.setError(exceptionDTO);
+		Mockito.when(exchangeRatesAPIService.getExchangeRates("EUR", "ZZZ", exchangeRatesApiKey)).thenReturn(exchangeRatesApiDTO);
+
+		given()
+				.header("Content-Type", MediaType.APPLICATION_JSON)
+				.when().get("/api/v1/convert?user_id=" + user.id + "&source=EUR&target=ZZZ&value=5")
+				.then()
+				.statusCode(Status.BAD_REQUEST.getStatusCode());
+
+		assertEquals(date, exchangeRatesApiDTO.getDate());
+		assertEquals("EUR", exchangeRatesApiDTO.getBase());
+		assertEquals(Map.of("ZZZ", new BigDecimal("5.3")), exchangeRatesApiDTO.getRates());
+	}
+
+	@Test
+	@Transactional
+	void whenUserNotFound_ThenReturnStatus400() {
+		PanacheMock.mock(User.class);
+		Mockito.when(User.getById(1L)).thenReturn(null);
+
+		given()
+				.header("Content-Type", MediaType.APPLICATION_JSON)
+				.when().get("/api/v1/convert?user_id=1&source=EUR&target=ZZZ&value=5")
+				.then()
+				.statusCode(Status.BAD_REQUEST.getStatusCode());
 	}
 
 }
