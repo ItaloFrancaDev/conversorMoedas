@@ -24,7 +24,7 @@ git clone git@github.com:thiagosena/currency-converter.git
 cd currency-converter
 mvn compile quarkus:dev
 ```
-Depois de ter compilado o projeto basta acessar o endereço [http://localhost:8080](http://localhost:8080)
+Após a compilação do projeto, basta acessar o endereço [http://localhost:8080](http://localhost:8080)
 
 ## Como utilizar a API
 
