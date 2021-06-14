@@ -21,7 +21,7 @@ import java.util.List;
 public class TrasactionResource {
 
 	@GET
-	@Path("/transaction")
+	@Path("/transactions")
 	@Operation(summary = "Get all transaction by user")
 	@APIResponse(responseCode = "200", description = "Returned all transactions by user")
 	@APIResponse(responseCode = "400", description = "Bad Request - make sure the userId field is entered.")

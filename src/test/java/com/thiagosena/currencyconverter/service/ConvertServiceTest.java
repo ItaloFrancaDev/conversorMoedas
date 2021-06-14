@@ -52,6 +52,6 @@ class ConvertServiceTest {
 
 		TransactionDTO transactionDTO = userService.convert(user.id, "EUR", "BRL", new BigDecimal(5));
 		assertNotNull(transactionDTO);
-		assertEquals(new BigDecimal("30.95"), transactionDTO.getTargetValue());
+		assertEquals(new BigDecimal("30.90"), transactionDTO.getTargetValue());
 	}
 }

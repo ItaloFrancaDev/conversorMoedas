@@ -43,7 +43,7 @@ class TransactionResourceTest {
 	@Test
 	void whenListAllTransactionByUserId_ThenReturnAllByUserId() {
 		Transaction[] transactions = given()
-				.when().get("/api/v1/transaction?user_id="+user.id)
+				.when().get("/api/v1/transactions?user_id="+user.id)
 				.then()
 				.statusCode(200)
 				.extract().as(Transaction[].class);
