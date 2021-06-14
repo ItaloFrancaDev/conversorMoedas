@@ -173,7 +173,7 @@ Retorno:
 Para visualizar a documentação completa da API, basta acessar o endereço [https://currencyconverterapi.thiagosena.com/swagger-ui/](https://currencyconverterapi.thiagosena.com/swagger-ui/)
 
 <p align="center">
-  <img width="800" src="docs/swagger.png" alt="Swagger"></img>
+  <img width="800" src="docs/swagger-ui.png" alt="Swagger"></img>
 </p>
 
 Foi implementado também um protótipo de interface simples utilizando o framework Vue.js com algumas bibliotecas. Para visualizar o exemplo basta acessar o
