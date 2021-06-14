@@ -14,11 +14,12 @@ phases:
       - ln -s apache-maven-3.8.1 maven
       - echo Logging in to Amazon ECR...
       - aws --version
-      - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
-        - IMAGE_REPOSITORY_NAME=currency-converter
-        - REPOSITORY_URI=635090544552.dkr.ecr.us-east-1.amazonaws.com/$IMAGE_REPOSITORY_NAME
-        - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
-        - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
+      - REPOSITORY=635090544552.dkr.ecr.us-east-1.amazonaws.com
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin $REPOSITORY
+      - IMAGE_REPOSITORY_NAME=currency-converter
+      - REPOSITORY_URI=$REPOSITORY/$IMAGE_REPOSITORY_NAME
+      - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+      - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
   build:
     commands:
       - echo Build started on `date`
