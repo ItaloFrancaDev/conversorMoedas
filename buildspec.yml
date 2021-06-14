@@ -25,8 +25,8 @@ phases:
       - echo Build started on `date`
       - mvn package -DskipTests
       - echo Building the Docker image...
-        - docker build -t $REPOSITORY_URI:latest .
-        - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+      - docker build -t $REPOSITORY_URI:latest .
+      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$CODEBUILD_BUILD_ID
   post_build:
     commands:
       - echo Build completed on `date`
