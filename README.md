@@ -233,5 +233,5 @@ O processo de execução dos testes estão sendo realizados no github action com
 sucesso, o github action envia um trigger para o AWS Pipeline fazer a execução do deploy como ilustrado na imagem abaixo.
 
 <p align="center">
-  <img width="800" src="docs/aws-cicd.png" alt="AWS Architecture CI/CD"></img>
+  <img width="800" src="docs/aws-arch.png" alt="AWS Architecture CI/CD"></img>
 </p>
