@@ -19,22 +19,21 @@ phases:
       - IMAGE_REPOSITORY_NAME=currency-converter
       - REPOSITORY_URI=$REPOSITORY/$IMAGE_REPOSITORY_NAME
       - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
-      - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
   build:
     commands:
       - echo Build started on `date`
       - mvn package -DskipTests
       - echo Building the Docker image...
       - docker build -f src/main/docker/Dockerfile.jvm -t $REPOSITORY_URI:latest .
-      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$CODEBUILD_BUILD_ID
+      - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$CODEBUILD_BUILD_NUMBER
   post_build:
     commands:
       - echo Build completed on `date`
       - echo Pushing the Docker images...
       - docker push $REPOSITORY_URI:latest
-      - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - docker push $REPOSITORY_URI:$CODEBUILD_BUILD_NUMBER
       - echo Writing image definitions file...
-      - printf '[{"name":"%s","imageUri":"%s"}]' $IMAGE_REPOSITORY_NAME $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+      - printf '[{"name":"%s","imageUri":"%s"}]' $IMAGE_REPOSITORY_NAME $REPOSITORY_URI:$CODEBUILD_BUILD_NUMBER > imagedefinitions.json
       - cat imagedefinitions.json
 artifacts:
   files: imagedefinitions.json
