@@ -3,6 +3,9 @@ package com.thiagosena.currencyconverter.dto;
 public class ErrorDTO {
 	private ExceptionDTO error;
 
+	public ErrorDTO() {
+	}
+
 	public ErrorDTO(ExceptionDTO error) {
 		this.error = error;
 	}

@@ -32,15 +32,15 @@ public class ConvertServiceImpl implements ConvertService {
 	String exchangeRatesApiKey;
 
 	private void fieldsValidate(Long userId, String source, String target, BigDecimal value) throws BadRequestException {
-		if(userId == null) {
+		if (userId == null) {
 			throw new BadRequestException("user_id is required");
-		} else if(StringUtil.isNullOrEmpty(source)) {
+		} else if (StringUtil.isNullOrEmpty(source)) {
 			throw new BadRequestException("source is required");
-		} else if(StringUtil.isNullOrEmpty(target)) {
+		} else if (StringUtil.isNullOrEmpty(target)) {
 			throw new BadRequestException("target is required");
-		} else if(value == null) {
+		} else if (value == null) {
 			throw new BadRequestException("value is required");
-		} else if(value.compareTo(BigDecimal.valueOf(0.01)) < 0){
+		} else if (value.compareTo(BigDecimal.valueOf(0.01)) < 0) {
 			throw new BadRequestException("value cannot be negative ");
 		}
 	}

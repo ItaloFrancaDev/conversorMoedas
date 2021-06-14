@@ -2,37 +2,16 @@
 <html lang="en">
 <head>
 	<meta charset="UTF-8">
-	<title>currency-converter - 1.0-SNAPSHOT</title>
+	<title>currency-converter - 1.0.0</title>
+	<link href="https://thiagosena.com/assets/ico/favicon-b5ecc36e2f9d7bd353ee91851eb81a94.png" rel="shortcut icon"/>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.3.4/vue.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.14.0/axios.min.js"></script>
+	<link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-beta/css/bootstrap.min.css" rel="stylesheet" type="text/css"/>
+	<link href="style.css" rel="stylesheet" type="text/css"/>
 	<style>
-		h1, h2, h3, h4, h5, h6 {
-			margin-bottom: 0.5rem;
-			font-weight: 400;
-			line-height: 1.5;
-		}
-
-		h1 {
-			font-size: 2.5rem;
-		}
-
-		h2 {
-			font-size: 2rem
-		}
-
-		h3 {
-			font-size: 1.75rem
-
-		}
-
-		h4 {
-			font-size: 1.5rem
-		}
-
-		h5 {
-			font-size: 1.25rem
-		}
-
-		h6 {
-			font-size: 1rem
+		#error {
+			color: #FF0000;
 		}
 
 		.lead {
@@ -43,14 +22,9 @@
 		.banner {
 			font-size: 2.7rem;
 			margin: 0;
-			padding: 2rem 1rem;
+			padding: 0.3rem 1rem;
 			background-color: #0d1c2c;
 			color: white;
-		}
-
-		body {
-			margin: 0;
-			font-family: -apple-system, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
 		}
 
 		code {
@@ -68,7 +42,7 @@
 
 		.right-column {
 			padding: .75rem;
-			max-width: 25%;
+			max-width: 30%;
 		}
 
 		.container {
@@ -109,35 +83,41 @@
 <body>
 
 <div class="banner lead">
-	Your new Cloud-Native application is ready!
+	Currency Converter - v1.0.0
 </div>
 
-<div class="container">
-	<div class="left-column">
-		<p class="lead"> Congratulations, you have created a new Quarkus cloud application.</p>
-
-		<h2>What is this page?</h2>
-
-		<p>This page is served by Quarkus. The source is in
-			<code>src/main/resources/META-INF/resources/index.html</code>.</p>
-
-		<h2>What are your next steps?</h2>
-
-		<p>If not already done, run the application in <em>dev mode</em> using: <code>./mvnw compile quarkus:dev</code>.
-		</p>
-		<ul>
-			<li>Your static assets are located in <code>src/main/resources/META-INF/resources</code>.</li>
-			<li>Configure your application in <code>src/main/resources/application.properties</code>.</li>
-			<li>Quarkus now ships with a <a href="/q/dev/">Dev UI</a> (available in dev mode only)</li>
-			<li>Play with the getting started example code located in <code>src/main/java</code>:</li>
-		</ul>
-		<div class="example-code">
-			<h3>RESTEasy JAX-RS example</h3>
-			<p>REST is easy peasy with this Hello World RESTEasy resource.</p>
-			<p><code>@Path: <a href="/hello" class="path-link" target="_blank">/hello</a></code></p>
-			<p><a href="https://quarkus.io/guides/getting-started#the-jax-rs-resources" class="guide-link" target="_blank">Related guide section...</a></p>
+<div class="container" id="app">
+	<div class="row main-container mx-auto">
+		<div class="row title-container no-gutters">
+			<div id="error">{{errors}}</div>
+			<div class="col-9">
+				<h1 class="title">Currency Converter</h1>
+			</div>
+			<div class="col-3">
+				<select @change="loadData" class="select-country" v-model="selected">
+					<option v-for="country in countries">{{country.name}}</option>
+				</select>
+			</div>
 		</div>
 
+		<div class="row">
+			<!-- input field 1 -->
+			<div class="col">
+				<img :src="imageSrc + 'flag-germany.png'" class="country-flag"/>
+				<h2 class="country-name">Germany</h2>
+				<p>Rate: 1 EUR</p>
+				<input :value="calc2" @keyup="calcInput_1(event, countryRate)" class="currency-input" id="currencyInput">
+			</div>
+			<!-- input field 2 -->
+			<div class="col">
+				<template v-for="country in countries" v-if="selected === country.name" v-model="countryRate">
+					<img :src="imageSrc + country.image" class="country-flag"/>
+					<h2 class="country-name">{{country.name}}</h2>
+					<p class="">Rate: {{countryRate}} {{country.money}}</p>
+					<input :value="calc1" @keyup="calcInput_2" class="currency-input"><span>{{country.money}}</span>
+				</template>
+			</div>
+		</div>
 	</div>
 	<div class="right-column">
 		<div class="right-section">
@@ -145,26 +125,138 @@
 			<ul>
 				<li>GroupId: <code>com.thiagosena</code></li>
 				<li>ArtifactId: <code>currency-converter</code></li>
-				<li>Version: <code>1.0-SNAPSHOT</code></li>
+				<li>Version: <code>1.0.0</code></li>
 				<li>Quarkus Version: <code>1.13.6.Final</code></li>
 			</ul>
 		</div>
 		<div class="right-section">
-			<h3>Do you like Quarkus?</h3>
+			<h3>Github project</h3>
 			<ul>
-				<li>Go give it a star on <a href="https://github.com/quarkusio/quarkus">GitHub</a>.</li>
+				<li>Go give it a star on <a href="https://github.com/thiagosena/currency-converter">GitHub</a>.</li>
 			</ul>
 		</div>
 		<div class="right-section">
 			<h3>More reading</h3>
 			<ul>
-				<li><a href="https://quarkus.io/guides/maven-tooling.html" target="_blank">Setup your IDE</a></li>
-				<li><a href="https://quarkus.io/guides/getting-started.html" target="_blank">Getting started</a></li>
-				<li><a href="https://quarkus.io/guides/" target="_blank">All guides</a></li>
+				<li><a href="/health" target="_blank">Health</a></li>
+				<li><a href="/swagger-ui" target="_blank">API documentation</a></li>
 				<li><a href="https://quarkus.io" target="_blank">Quarkus Web Site</a></li>
 			</ul>
 		</div>
 	</div>
 </div>
+<script>
+	const app = new Vue({
+		el: "#app",
+		data: {
+			selected: "Brazil",
+			countryRate: 0,
+			calc1: "",
+			errors: "",
+			calc2: "",
+			imageSrc: "https://s3-us-west-2.amazonaws.com/s.cdpn.io/286148/",
+			firstInputSelected: true,
+			input: document.getElementById("currencyInput"),
+			countries: [
+				{
+					name: "Brazil",
+					money: "BRL",
+					rate: 0,
+					image: "flag-brazil.png"
+				},
+				{
+					name: "UK",
+					money: "GBP",
+					rate: 0,
+					image: "flag-uk.png"
+				},
+				{
+					name: "Australia",
+					money: "AUD",
+					rate: 0,
+					image: "flag-australia.png"
+				},
+				{
+					name: "USA",
+					money: "USD",
+					rate: 0,
+					image: "flag-usa.png"
+				},
+				{
+					name: "Canada",
+					money: "CAD",
+					rate: 0,
+					image: "flag-canada.png"
+				},
+				{
+					name: "New Zealand",
+					money: "NZD",
+					rate: 0,
+					image: "flag-new-zealand.png"
+				},
+				{
+					name: "Japanese",
+					money: "JPY",
+					rate: 0,
+					image: "flag-japan.png"
+				}
+			]
+		},
+		methods: {
+			calcInput_1: function (e, rate) {
+				this.firstInputSelected = true;
+				this.calculate(e, rate);
+			},
+			calcInput_2: function (e, rate) {
+				this.firstInputSelected = false;
+				this.calculate(e, rate);
+			},
+			loadData: function () {
+				let selected;
+				for (let i = 0; i < app.countries.length; i++) {
+					if (app.selected === app.countries[i].name) {
+						selected = app.countries[i];
+					}
+				}
+				axios.get(`/api/v1/convert?user_id=1&source=EUR&target=${selected.money}&value=1`)
+					.then(function (response) {
+						app.countryRate = response.data.conversionRate.toFixed(2);
+
+						const input2 = parseFloat(document.getElementById("currencyInput").value);
+						if (isNaN(input2)) {
+							app.calc2 = "";
+							app.calc1 = "";
+							return;
+						}
+
+						app.calc1 = (input2 * app.countryRate).toFixed(2);
+					})
+					.catch(function (error) {
+						console.log(error);
+						app.errors = error.message;
+					});
+			},
+			calculate: function (e) {
+				const value = parseFloat(e.target.value);
+				if (isNaN(value)) {
+					this.calc2 = "";
+					this.calc1 = "";
+					return;
+				}
+
+				if (this.firstInputSelected) {
+					this.calc2 = value;
+					this.calc1 = (value * this.countryRate).toFixed(2);
+				} else {
+					this.calc1 = value;
+					this.calc2 = (value / this.countryRate).toFixed(2);
+				}
+			}
+		}
+	});
+	$(function () {
+		app.loadData();
+	})
+</script>
 </body>
 </html>

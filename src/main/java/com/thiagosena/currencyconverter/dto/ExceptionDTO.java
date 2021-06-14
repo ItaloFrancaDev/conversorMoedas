@@ -1,7 +1,10 @@
 package com.thiagosena.currencyconverter.dto;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import javax.ws.rs.core.Response.Status;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class ExceptionDTO {
 	private String message;
 
@@ -9,13 +12,13 @@ public class ExceptionDTO {
 
 	private Status status;
 
-	private int code;
+	private int statusCode;
 
 	public ExceptionDTO() {
 	}
 
-	public ExceptionDTO(int code, Status status, String message, String error) {
-		this.code = code;
+	public ExceptionDTO(int statusCode, Status status, String message, String error) {
+		this.statusCode = statusCode;
 		this.status = status;
 		this.message = message;
 		this.exception = error;
@@ -37,7 +40,7 @@ public class ExceptionDTO {
 		return status;
 	}
 
-	public int getCode() {
-		return code;
+	public int getStatusCode() {
+		return statusCode;
 	}
 }

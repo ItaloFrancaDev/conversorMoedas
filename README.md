@@ -8,7 +8,7 @@
 [![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=thiagosena_currency-converter&metric=vulnerabilities)](https://sonarcloud.io/dashboard?id=thiagosena_currency-converter)
 </div>
 
-# Currency Converter
+# Currency Converter [![Latest release](https://img.shields.io/github/v/release/thiagosena/currency-converter?color=brightgreen&label=latest%20release)](https://github.com/thiagosena/currency-converter/releases/latest)
 
 É uma API que fornece a conversão entre as principais moedas do mercado mundial. As taxas de conversão são obtidas através da plataforma [https://exchangeratesapi.io/](https://exchangeratesapi.io/), que conta com mais de 15 fontes de taxas
 de câmbio e está entregando dados para mais de 170 moedas mundiais.

@@ -1,0 +1,43 @@
+version: 0.2
+
+phases:
+  install:
+    runtime-versions:
+      java: openjdk11
+  pre_build:
+    commands:
+      - echo Install Maven...
+      - apt-get update
+      - apt-get install -y jq
+      - wget https://www-eu.apache.org/dist/maven/maven-3/3.8.1/binaries/apache-maven-3.8.1-bin.tar.gz
+      - tar xzf apache-maven-3.8.1-bin.tar.gz
+      - ln -s apache-maven-3.8.1 maven
+      - echo Logging in to Amazon ECR...
+      - aws --version
+      - $(aws ecr get-login --region $AWS_DEFAULT_REGION --no-include-email)
+        - IMAGE_REPOSITORY_NAME=currency-converter
+        - REPOSITORY_URI=635090544552.dkr.ecr.us-east-1.amazonaws.com/$IMAGE_REPOSITORY_NAME
+        - COMMIT_HASH=$(echo $CODEBUILD_RESOLVED_SOURCE_VERSION | cut -c 1-7)
+        - IMAGE_TAG=build-$(echo $CODEBUILD_BUILD_ID | awk -F":" '{print $2}')
+  build:
+    commands:
+      - echo Build started on `date`
+      - mvn package -DskipTests
+      - echo Building the Docker image...
+        - docker build -t $REPOSITORY_URI:latest .
+        - docker tag $REPOSITORY_URI:latest $REPOSITORY_URI:$IMAGE_TAG
+  post_build:
+    commands:
+      - echo Build completed on `date`
+      - echo Pushing the Docker images...
+      - docker push $REPOSITORY_URI:latest
+      - docker push $REPOSITORY_URI:$IMAGE_TAG
+      - echo Writing image definitions file...
+      - printf '[{"name":"%s","imageUri":"%s"}]' $IMAGE_REPOSITORY_NAME $REPOSITORY_URI:$IMAGE_TAG > imagedefinitions.json
+      - cat imagedefinitions.json
+artifacts:
+  files: imagedefinitions.json
+cache:
+  paths:
+    - '/root/.m2/**/*'
+    - 'build/**/*'
