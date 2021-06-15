@@ -172,35 +172,38 @@ Retorno:
 
 Para visualizar a documentação completa da API, basta acessar o endereço [https://currencyconverterapi.thiagosena.com/swagger-ui/](https://currencyconverterapi.thiagosena.com/swagger-ui/)
 
-<p align="center">
+<figure align="center">
   <img width="800" src="docs/swagger-ui.png" alt="Swagger"></img>
-</p>
+  <figcaption>Figura 1: Documentação da API com Swagger-UI</figcaption>
+</figure>
 
 Foi implementado também um protótipo de interface simples utilizando o framework Vue.js com algumas bibliotecas. Para visualizar o exemplo basta acessar o
 endereço [https://currencyconverterapi.thiagosena.com](https://currencyconverterapi.thiagosena.com).
 
-<p align="center">
+<figure align="center">
   <img width="800" src="docs/ui.png" alt="Project UI"></img>
-</p>
+  <figcaption>Figura 2: Protótipo de interface utilizando a API de conversão do projeto</figcaption>
+</figure>
 
 ## Recursos utilizados no projeto
 
 A API foi desenvolvida utilizando a linguagem [JAVA 11](https://docs.oracle.com/en/java/javase/11/) e o framework [Quarkus](https://quarkus.io)
 
-<p align="center">
+<figure align="center">
   <img width="400" src="docs/developer_joy.png" alt="Developer Joy"></img>
-</p>
+  <figcaption>Figura 3: Developer Joy</figcaption>
+</figure>
 
 ### Porque usar o Quarkus?
 
-O Quarkus é um framework java open source desenvolvido pela Red Hat e lançado no final de 2018. Foi desenvolvido sob medida para o GraalVM e OpenJDK HotSpot, com a promessa de ter um startup muito rápido e pouco gasto de memória de
-footprint, sendo assim um framework ótimo para cloud (ex: k8s), microservices e também serverless.
+O Quarkus é um framework java open source desenvolvido pela Red Hat e lançado no final de 2018. Foi desenvolvido sob medida para o GraalVM e OpenJDK HotSpot, com a promessa de ter um startup muito rápido e pouco gasto de memória de footprint, sendo assim um framework ótimo para cloud (ex: k8s), microservices e também serverless.
 
-<p align="center">
+<figure align="center">
   <img width="800" src="docs/quarkusmemory.png" alt="Benchmark Quarkus"></img>
-</p>
+  <figcaption>Figura 4: Benchmark do framework Quarkus</figcaption>
+</figure>
 
-Na imagem acima, extraída do site [https://www.openshift.com/blog/quarkus-is-here-for-your-java](https://www.openshift.com/blog/quarkus-is-here-for-your-java), é possível ver dados de tempo de inicialização e consumo de memória com um
+Na Figura 4, extraída do site [https://www.openshift.com/blog/quarkus-is-here-for-your-java](https://www.openshift.com/blog/quarkus-is-here-for-your-java), é possível ver dados de tempo de inicialização e consumo de memória com um
 executável nativo ou utilizando a JDK.
 
 ### Bibliotecas utilizadas
@@ -217,21 +220,24 @@ executável nativo ou utilizando a JDK.
 - [**SonarLint**](https://www.sonarlint.org/intellij): Integrado a IDE Intellij
 - [**JaCoCo**](https://github.com/jacoco/jacoco): Cobertura de testes
 
-<p align="center">
+<figure align="center">
   <img width="800" src="docs/jacoco.png" alt="Jacoco"></img>
-</p>
+  <figcaption>Figura 5: Tela inicial do JaCoCo com 100% de cobertura de testes</figcaption>
+</figure>
 
 - [**SonarCloud**](https://sonarcloud.io): Melhorar a qualidade e segurança do código.
 
-<p align="center">
+<figure align="center">
   <img width="800" src="docs/sonarcloud.png" alt="SonarCloud"></img>
-</p>
+  <figcaption>Figura 6: Tela inicial do projeto no SonarCloud</figcaption>
+</figure>
 
 ## CI/CD
 
-O processo de execução dos testes estão sendo realizados no github action com o sonarcloud. O code deploy foi implementado utilizando a infraestrutura da AWS. Para isso, se a build, junto com os testes e o sonarcloud forem executados com
-sucesso, o github action envia um trigger para o AWS Pipeline fazer a execução do deploy como ilustrado na imagem abaixo.
+O processo de execução dos testes estão sendo realizados no github action com o SonarCloud. O code deploy foi implementado utilizando a infraestrutura da AWS. Para isso, se a build, junto com os testes e o SonarCloud forem executados com
+sucesso, o github action envia um trigger para o AWS Pipeline fazer a execução do deploy.
 
-<p align="center">
-  <img width="800" src="docs/aws-arch.png" alt="AWS Architecture CI/CD"></img>
-</p>
+<figure align="center">
+  <img width="800" src="docs/aws-infra.png" alt="AWS Infrastructure"></img>
+  <figcaption>Figura 7: Arquitetura da infraestrutura para AWS ECS com AWS CodePipeline e Github Actions</figcaption>
+</figure>
